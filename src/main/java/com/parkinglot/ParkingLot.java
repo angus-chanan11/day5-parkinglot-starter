@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class ParkingLot {
     private static final Integer CAPACITY = 10;
+    private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
     private Map<Ticket, Car> parkingRecords = new HashMap<>();
     private Integer occupiedSlot;
 
@@ -31,6 +32,7 @@ public class ParkingLot {
             occupiedSlot--;
             return parkingRecords.get(ticket);
         } else {
+            System.out.printf(UNRECOGNIZED_PARKING_TICKET);
             return null;
         }
     }

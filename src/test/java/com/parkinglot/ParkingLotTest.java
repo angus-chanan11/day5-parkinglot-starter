@@ -1,10 +1,25 @@
 package com.parkinglot;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParkingLotTest {
+
+    private ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+
+    @BeforeEach
+    public void setup() {
+        System.setOut(new PrintStream(outContent));
+    }
+
+    private String systemOut() {
+        return outContent.toString();
+    }
 
     @Test
     void should_return_ticket_when_park_given_a_car(){
@@ -46,7 +61,7 @@ class ParkingLotTest {
     }
 
     @Test
-    void should_return_null_when_fetch_given_non_existing_ticket(){
+    void should_return_null_and_error_message_when_fetch_given_non_existing_ticket(){
         // Given
         ParkingLot parkingLot = new ParkingLot();
         Ticket ticket = new Ticket();
@@ -54,6 +69,7 @@ class ParkingLotTest {
         Car fetchedCar = parkingLot.fetch(ticket);
         // Then
         assertNull(fetchedCar);
+        assertTrue(systemOut().contentEquals("Unrecognized parking ticket."));
     }
 
     @Test
