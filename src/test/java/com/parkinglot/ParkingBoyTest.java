@@ -10,6 +10,7 @@ class ParkingBoyTest {
 
     private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
     private static final String NO_AVAILABLE_POSITION = "No available position.";
+    public static final int PARKING_LOT_CAPACITY = 10;
 
     @Test
     void should_return_ticket_when_park_given_a_car_and_a_parking_lot(){
@@ -92,7 +93,7 @@ class ParkingBoyTest {
         ParkingLot parkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = List.of(parkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < PARKING_LOT_CAPACITY; i++) {
             Car car = new Car();
             parkingBoy.park(car);
         }
@@ -123,7 +124,7 @@ class ParkingBoyTest {
     void should_return_ticket_and_park_to_second_lot_when_park_given_a_car_and_first_lot_full_and_second_lot_available(){
         // Given
         ParkingLot firstParkingLot = new ParkingLot();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < PARKING_LOT_CAPACITY; i++) {
             firstParkingLot.park(new Car());
         }
         ParkingLot secondParkingLot = new ParkingLot();
@@ -193,11 +194,11 @@ class ParkingBoyTest {
     void should_return_error_message_when_park_given_no_position_remaining_in_all_parking_lot(){
         // Given
         ParkingLot firstParkingLot = new ParkingLot();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < PARKING_LOT_CAPACITY; i++) {
             firstParkingLot.park(new Car());
         }
         ParkingLot secondParkingLot = new ParkingLot();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < PARKING_LOT_CAPACITY; i++) {
             secondParkingLot.park(new Car());
         }
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
