@@ -137,4 +137,23 @@ class ParkingBoyTest {
         assertFalse(firstParkingLot.getCurrentlyParkedCars().contains(car));
         assertTrue(secondParkingLot.getCurrentlyParkedCars().contains(car));
     }
+
+    @Test
+    void should_return_correct_car_when_fetch_twice_given_2_ticket_and_2_parking_lot(){
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot();
+        ParkingLot secondParkingLot = new ParkingLot();
+        List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        Car firstCar = new Car();
+        Car secondCar = new Car();
+        Ticket firstTicket = parkingBoy.park(firstCar);
+        Ticket secondTicket = parkingBoy.park(secondCar);
+        // When
+        Car firstFetchedCar = parkingBoy.fetch(firstTicket);
+        Car secondFetchedCar = parkingBoy.fetch(secondTicket);
+        // Then
+        assertEquals(firstCar, firstFetchedCar);
+        assertEquals(secondCar, secondFetchedCar);
+    }
 }
