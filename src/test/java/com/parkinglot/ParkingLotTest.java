@@ -73,7 +73,7 @@ class ParkingLotTest {
     }
 
     @Test
-    void should_return_null_when_fetch_given_used_ticket(){
+    void should_return_null_and_error_message_when_fetch_given_used_ticket(){
         // Given
         ParkingLot parkingLot = new ParkingLot();
         Car car = new Car();
@@ -83,6 +83,7 @@ class ParkingLotTest {
         Car doubleFetchCar = parkingLot.fetch(ticket);
         // Then
         assertNull(doubleFetchCar);
+        assertTrue(systemOut().contentEquals("Unrecognized parking ticket."));
     }
 
     @Test
