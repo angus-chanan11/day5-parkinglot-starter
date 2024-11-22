@@ -118,4 +118,23 @@ class ParkingBoyTest {
         assertTrue(firstParkingLot.getCurrentlyParkedCars().contains(car));
         assertFalse(secondParkingLot.getCurrentlyParkedCars().contains(car));
     }
+
+    @Test
+    void should_return_ticket_and_park_to_second_lot_when_park_given_a_car_and_first_lot_full_and_second_lot_available(){
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot();
+        for (int i = 0; i < 10; i++) {
+            firstParkingLot.park(new Car());
+        }
+        ParkingLot secondParkingLot = new ParkingLot();
+        List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        Car car = new Car();
+        // When
+        Ticket ticket = parkingBoy.park(car);
+        // Then
+        assertNotNull(ticket);
+        assertFalse(firstParkingLot.getCurrentlyParkedCars().contains(car));
+        assertTrue(secondParkingLot.getCurrentlyParkedCars().contains(car));
+    }
 }
