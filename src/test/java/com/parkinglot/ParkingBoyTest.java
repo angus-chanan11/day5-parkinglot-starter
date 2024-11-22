@@ -2,6 +2,8 @@ package com.parkinglot;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParkingBoyTest {
@@ -13,7 +15,8 @@ class ParkingBoyTest {
     void should_return_ticket_when_park_given_a_car_and_a_parking_lot(){
         // Given
         ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        List<ParkingLot> parkingLots = List.of(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         Car car = new Car();
         // When
         Ticket ticket = parkingBoy.park(car);
@@ -25,7 +28,8 @@ class ParkingBoyTest {
     void should_return_the_car_when_fetch_given_a_ticket_and_a_parking_lot(){
         // Given
         ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        List<ParkingLot> parkingLots = List.of(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         Car car = new Car();
         Ticket ticket = parkingBoy.park(car);
         // When
@@ -38,7 +42,8 @@ class ParkingBoyTest {
     void should_return_correct_car_when_fetch_twice_given_2_ticket_and_a_parking_lot(){
         // Given
         ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        List<ParkingLot> parkingLots = List.of(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         Car firstCar = new Car();
         Car secondCar = new Car();
         Ticket firstTicket = parkingBoy.park(firstCar);
@@ -55,10 +60,11 @@ class ParkingBoyTest {
     void should_return_error_when_fetch_given_non_existing_ticket_and_a_parking_lot(){
         // Given
         ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        List<ParkingLot> parkingLots = List.of(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         Car car = new Car();
         parkingBoy.park(car);
-        Ticket ticket = new Ticket();
+        Ticket ticket = new Ticket(parkingLot);
         // When
         UnrecognizedParkingTicketException unrecognizedParkingTicketException = assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetch(ticket));
         // Then
@@ -69,7 +75,8 @@ class ParkingBoyTest {
     void should_return_error_message_when_fetch_given_used_ticket_and_a_parking_lot(){
         // Given
         ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        List<ParkingLot> parkingLots = List.of(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         Car car = new Car();
         Ticket ticket = parkingBoy.park(car);
         parkingBoy.fetch(ticket);
@@ -83,7 +90,8 @@ class ParkingBoyTest {
     void should_return_error_message_when_park_given_no_position_remaining(){
         // Given
         ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        List<ParkingLot> parkingLots = List.of(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         for (int i = 0; i < 10; i++) {
             Car car = new Car();
             parkingBoy.park(car);
@@ -93,5 +101,19 @@ class ParkingBoyTest {
         NoAvailablePositionException noAvailablePositionException = assertThrows(NoAvailablePositionException.class, () -> parkingBoy.park(car));
         // Then
         assertEquals(NO_AVAILABLE_POSITION, noAvailablePositionException.getMessage());
+    }
+
+    @Test
+    void should_return_ticket_when_park_given_a_car_and_2_parking_lots(){
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot();
+        ParkingLot secondParkingLot = new ParkingLot();
+        List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        Car car = new Car();
+        // When
+        Ticket ticket = parkingBoy.park(car);
+        // Then
+        assertNotNull(ticket);
     }
 }

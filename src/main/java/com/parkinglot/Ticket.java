@@ -2,9 +2,11 @@ package com.parkinglot;
 
 public class Ticket {
     private boolean isUsed;
+    private ParkingLot parkingLot;
 
-    public Ticket() {
+    public Ticket(ParkingLot parkingLot) {
         this.isUsed = false;
+        this.parkingLot = parkingLot;
     }
 
     public void setUsed() {
@@ -13,5 +15,9 @@ public class Ticket {
 
     public boolean isUsed() {
         return this.isUsed;
+    }
+
+    public ParkingLot getParkingLot() {
+        return this.parkingLot;
     }
 }

@@ -54,7 +54,7 @@ class ParkingLotTest {
         ParkingLot parkingLot = new ParkingLot();
         Car car = new Car();
         parkingLot.park(car);
-        Ticket ticket = new Ticket();
+        Ticket ticket = new Ticket(parkingLot);
         // When
         UnrecognizedParkingTicketException unrecognizedParkingTicketException = assertThrows(UnrecognizedParkingTicketException.class, () -> parkingLot.fetch(ticket));
         // Then

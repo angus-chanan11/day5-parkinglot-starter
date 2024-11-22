@@ -1,8 +1,10 @@
 package com.parkinglot;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class ParkingLot {
     private static final Integer CAPACITY = 10;
@@ -15,7 +17,7 @@ public class ParkingLot {
 
     public Ticket park(Car car) throws NoAvailablePositionException {
         if (isPositionAvailable()) {
-            Ticket ticket = new Ticket();
+            Ticket ticket = new Ticket(this);
             parkingRecords.put(ticket, car);
             occupiedPosition++;
             return ticket;
@@ -35,7 +37,14 @@ public class ParkingLot {
         }
     }
 
-    private boolean isPositionAvailable() {
+    public boolean isPositionAvailable() {
         return occupiedPosition < CAPACITY;
+    }
+
+    public List<Car> getCurrentlyParkedCars() {
+        return parkingRecords.entrySet().stream()
+                .filter(entry -> !entry.getKey().isUsed())
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
     }
 }

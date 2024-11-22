@@ -1,17 +1,28 @@
 package com.parkinglot;
 
-public class ParkingBoy {
-    private ParkingLot parkingLot;
+import java.util.List;
 
-    public ParkingBoy(ParkingLot parkingLot) {
-        this.parkingLot = parkingLot;
+public class ParkingBoy {
+    private List<ParkingLot> parkingLots;
+
+    public ParkingBoy(List<ParkingLot> parkingLots) {
+        this.parkingLots = parkingLots;
     }
 
     public Ticket park(Car car) {
-        return parkingLot.park(car);
+        ParkingLot firstAvailableParkingLot = parkingLots.stream()
+                .filter(ParkingLot::isPositionAvailable)
+                .findFirst()
+                .orElseThrow(NoAvailablePositionException::new);
+        return firstAvailableParkingLot.park(car);
     }
 
     public Car fetch(Ticket ticket) {
-        return parkingLot.fetch(ticket);
+        ParkingLot ticketParkingLot = ticket.getParkingLot();
+        if (parkingLots.contains(ticketParkingLot)) {
+            return ticketParkingLot.fetch(ticket);
+        } else {
+            throw new UnrecognizedParkingTicketException();
+        }
     }
 }
