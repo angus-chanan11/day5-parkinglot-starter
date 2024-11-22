@@ -80,7 +80,7 @@ class ParkingBoyTest {
     }
 
     @Test
-    void should_return_error_message_when_park_given_no_slot_remaining(){
+    void should_return_error_message_when_park_given_no_position_remaining(){
         // Given
         ParkingLot parkingLot = new ParkingLot();
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
