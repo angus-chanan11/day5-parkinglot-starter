@@ -1,26 +1,13 @@
 package com.parkinglot;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParkingLotTest {
 
-    private ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
-
-    @BeforeEach
-    public void setup() {
-        System.setOut(new PrintStream(outContent));
-    }
-
-    private String systemOut() {
-        return outContent.toString();
-    }
+    private static final String NO_AVAILABLE_POSITION = "No available position.";
 
     @Test
     void should_return_ticket_when_park_given_a_car(){
@@ -86,7 +73,7 @@ class ParkingLotTest {
     }
 
     @Test
-    void should_return_null_and_error_message_when_park_given_no_slot_remaining(){
+    void should_return_error_message_when_park_given_no_slot_remaining(){
         // Given
         ParkingLot parkingLot = new ParkingLot();
         for (int i = 0; i < 10; i++) {
@@ -95,9 +82,8 @@ class ParkingLotTest {
         }
         Car car = new Car();
         // When
-        Ticket ticket = parkingLot.park(car);
+        NoAvailablePositionException noAvailablePositionException = assertThrows(NoAvailablePositionException.class, () -> parkingLot.park(car));
         // Then
-        assertNull(ticket);
-        assertTrue(systemOut().contentEquals("No available position."));
+        assertEquals(NO_AVAILABLE_POSITION, noAvailablePositionException.getMessage());
     }
 }

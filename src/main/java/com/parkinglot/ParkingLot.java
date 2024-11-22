@@ -6,8 +6,6 @@ import java.util.Objects;
 
 public class ParkingLot {
     private static final Integer CAPACITY = 10;
-    private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
-    private static final String NO_AVAILABLE_POSITION = "No available position.";
     private Map<Ticket, Car> parkingRecords = new HashMap<>();
     private Integer occupiedSlot;
 
@@ -15,15 +13,14 @@ public class ParkingLot {
         this.occupiedSlot = 0;
     }
 
-    public Ticket park(Car car) {
+    public Ticket park(Car car) throws NoAvailablePositionException {
         if (isSlotAvailable()) {
             Ticket ticket = new Ticket();
             parkingRecords.put(ticket, car);
             occupiedSlot++;
             return ticket;
         } else {
-            System.out.printf(NO_AVAILABLE_POSITION);
-            return null;
+            throw new NoAvailablePositionException();
         }
     }
 
