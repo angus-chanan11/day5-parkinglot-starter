@@ -156,4 +156,20 @@ class ParkingBoyTest {
         assertEquals(firstCar, firstFetchedCar);
         assertEquals(secondCar, secondFetchedCar);
     }
+
+    @Test
+    void should_return_error_when_fetch_given_non_existing_ticket_and_2_parking_lot(){
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot();
+        ParkingLot secondParkingLot = new ParkingLot();
+        List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        Car car = new Car();
+        parkingBoy.park(car);
+        Ticket ticket = new Ticket(firstParkingLot);
+        // When
+        UnrecognizedParkingTicketException unrecognizedParkingTicketException = assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetch(ticket));
+        // Then
+        assertEquals(UNRECOGNIZED_PARKING_TICKET, unrecognizedParkingTicketException.getMessage());
+    }
 }
