@@ -68,4 +68,19 @@ class ParkingLotTest {
         // Then
         assertNull(doubleFetchCar);
     }
+
+    @Test
+    void should_return_null_when_park_given_no_slot_remaining(){
+        // Given
+        ParkingLot parkingLot = new ParkingLot();
+        for (int i = 0; i < 10; i++) {
+            Car car = new Car();
+            parkingLot.park(car);
+        }
+        Car car = new Car();
+        // When
+        Ticket ticket = parkingLot.park(car);
+        // Then
+        assertNull(ticket);
+    }
 }
