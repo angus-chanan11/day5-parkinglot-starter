@@ -87,7 +87,7 @@ class ParkingLotTest {
     }
 
     @Test
-    void should_return_null_when_park_given_no_slot_remaining(){
+    void should_return_null_and_error_message_when_park_given_no_slot_remaining(){
         // Given
         ParkingLot parkingLot = new ParkingLot();
         for (int i = 0; i < 10; i++) {
@@ -99,5 +99,6 @@ class ParkingLotTest {
         Ticket ticket = parkingLot.park(car);
         // Then
         assertNull(ticket);
+        assertTrue(systemOut().contentEquals("No available position."));
     }
 }
