@@ -115,5 +115,7 @@ class ParkingBoyTest {
         Ticket ticket = parkingBoy.park(car);
         // Then
         assertNotNull(ticket);
+        assertTrue(firstParkingLot.getCurrentlyParkedCars().contains(car));
+        assertFalse(secondParkingLot.getCurrentlyParkedCars().contains(car));
     }
 }
