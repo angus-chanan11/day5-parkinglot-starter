@@ -188,4 +188,24 @@ class ParkingBoyTest {
         // Then
         assertEquals(UNRECOGNIZED_PARKING_TICKET, unrecognizedParkingTicketException.getMessage());
     }
+
+    @Test
+    void should_return_error_message_when_park_given_no_position_remaining_in_all_parking_lot(){
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot();
+        for (int i = 0; i < 10; i++) {
+            firstParkingLot.park(new Car());
+        }
+        ParkingLot secondParkingLot = new ParkingLot();
+        for (int i = 0; i < 10; i++) {
+            secondParkingLot.park(new Car());
+        }
+        List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        Car car = new Car();
+        // When
+        NoAvailablePositionException noAvailablePositionException = assertThrows(NoAvailablePositionException.class, () -> parkingBoy.park(car));
+        // Then
+        assertEquals(NO_AVAILABLE_POSITION, noAvailablePositionException.getMessage());
+    }
 }
