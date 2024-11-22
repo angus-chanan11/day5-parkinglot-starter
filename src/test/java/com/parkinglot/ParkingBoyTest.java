@@ -104,7 +104,7 @@ class ParkingBoyTest {
     }
 
     @Test
-    void should_return_ticket_when_park_given_a_car_and_2_parking_lots(){
+    void should_return_ticket_and_park_to_first_lot_when_park_given_a_car_and_2_parking_lots(){
         // Given
         ParkingLot firstParkingLot = new ParkingLot();
         ParkingLot secondParkingLot = new ParkingLot();
