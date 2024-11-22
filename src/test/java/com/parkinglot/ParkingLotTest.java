@@ -8,6 +8,7 @@ class ParkingLotTest {
 
     private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
     private static final String NO_AVAILABLE_POSITION = "No available position.";
+    public static final int PARKING_LOT_CAPACITY = 10;
 
     @Test
     void should_return_ticket_when_park_given_a_car(){
@@ -78,7 +79,7 @@ class ParkingLotTest {
     void should_return_error_message_when_park_given_no_position_remaining(){
         // Given
         ParkingLot parkingLot = new ParkingLot();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < PARKING_LOT_CAPACITY; i++) {
             Car car = new Car();
             parkingLot.park(car);
         }
