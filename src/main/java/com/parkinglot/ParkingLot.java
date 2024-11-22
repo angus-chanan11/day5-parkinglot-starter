@@ -2,6 +2,7 @@ package com.parkinglot;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ParkingLot {
     private Map<Ticket, Car> parkingRecords = new HashMap<>();
@@ -13,6 +14,12 @@ public class ParkingLot {
     }
 
     public Car fetch(Ticket ticket) {
-        return parkingRecords.get(ticket);
+        Car fetchCar = parkingRecords.get(ticket);
+        if (Objects.nonNull(fetchCar) && !ticket.isUsed()) {
+            ticket.setUsed();
+            return parkingRecords.get(ticket);
+        } else {
+            return null;
+        }
     }
 }
