@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ParkingLotTest {
 
     private ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
 
     @BeforeEach
     public void setup() {
@@ -61,29 +62,27 @@ class ParkingLotTest {
     }
 
     @Test
-    void should_return_null_and_error_message_when_fetch_given_non_existing_ticket(){
+    void should_return_error_when_fetch_given_non_existing_ticket(){
         // Given
         ParkingLot parkingLot = new ParkingLot();
         Ticket ticket = new Ticket();
         // When
-        Car fetchedCar = parkingLot.fetch(ticket);
+        UnrecognizedParkingTicketException unrecognizedParkingTicketException = assertThrows(UnrecognizedParkingTicketException.class, () -> parkingLot.fetch(ticket));
         // Then
-        assertNull(fetchedCar);
-        assertTrue(systemOut().contentEquals("Unrecognized parking ticket."));
+        assertEquals(UNRECOGNIZED_PARKING_TICKET, unrecognizedParkingTicketException.getMessage());
     }
 
     @Test
-    void should_return_null_and_error_message_when_fetch_given_used_ticket(){
+    void should_return_error_message_when_fetch_given_used_ticket(){
         // Given
         ParkingLot parkingLot = new ParkingLot();
         Car car = new Car();
         Ticket ticket = parkingLot.park(car);
         parkingLot.fetch(ticket);
         // When
-        Car doubleFetchCar = parkingLot.fetch(ticket);
+        UnrecognizedParkingTicketException unrecognizedParkingTicketException = assertThrows(UnrecognizedParkingTicketException.class, () -> parkingLot.fetch(ticket));
         // Then
-        assertNull(doubleFetchCar);
-        assertTrue(systemOut().contentEquals("Unrecognized parking ticket."));
+        assertEquals(UNRECOGNIZED_PARKING_TICKET, unrecognizedParkingTicketException.getMessage());
     }
 
     @Test

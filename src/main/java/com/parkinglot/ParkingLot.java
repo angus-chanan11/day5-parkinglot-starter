@@ -27,15 +27,14 @@ public class ParkingLot {
         }
     }
 
-    public Car fetch(Ticket ticket) {
+    public Car fetch(Ticket ticket) throws UnrecognizedParkingTicketException {
         Car fetchCar = parkingRecords.get(ticket);
         if (Objects.nonNull(fetchCar) && !ticket.isUsed()) {
             ticket.setUsed();
             occupiedSlot--;
             return parkingRecords.get(ticket);
         } else {
-            System.out.printf(UNRECOGNIZED_PARKING_TICKET);
-            return null;
+            throw new UnrecognizedParkingTicketException();
         }
     }
 
