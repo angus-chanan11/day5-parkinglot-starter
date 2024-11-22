@@ -7,17 +7,17 @@ import java.util.Objects;
 public class ParkingLot {
     private static final Integer CAPACITY = 10;
     private Map<Ticket, Car> parkingRecords = new HashMap<>();
-    private Integer occupiedSlot;
+    private Integer occupiedPosition;
 
     public ParkingLot() {
-        this.occupiedSlot = 0;
+        this.occupiedPosition = 0;
     }
 
     public Ticket park(Car car) throws NoAvailablePositionException {
-        if (isSlotAvailable()) {
+        if (isPositionAvailable()) {
             Ticket ticket = new Ticket();
             parkingRecords.put(ticket, car);
-            occupiedSlot++;
+            occupiedPosition++;
             return ticket;
         } else {
             throw new NoAvailablePositionException();
@@ -28,14 +28,14 @@ public class ParkingLot {
         Car fetchCar = parkingRecords.get(ticket);
         if (Objects.nonNull(fetchCar) && !ticket.isUsed()) {
             ticket.setUsed();
-            occupiedSlot--;
+            occupiedPosition--;
             return parkingRecords.get(ticket);
         } else {
             throw new UnrecognizedParkingTicketException();
         }
     }
 
-    private boolean isSlotAvailable() {
-        return occupiedSlot < CAPACITY;
+    private boolean isPositionAvailable() {
+        return occupiedPosition < CAPACITY;
     }
 }
