@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ParkingBoyTest {
 
+    private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
+
     @Test
     void should_return_ticket_when_park_given_a_car_and_a_parking_lot(){
         // Given
@@ -46,5 +48,17 @@ class ParkingBoyTest {
         // Then
         assertEquals(firstCar, firstFetchedCar);
         assertEquals(secondCar, secondFetchedCar);
+    }
+
+    @Test
+    void should_return_error_when_fetch_given_non_existing_ticket_and_a_parking_lot(){
+        // Given
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        Ticket ticket = new Ticket();
+        // When
+        UnrecognizedParkingTicketException unrecognizedParkingTicketException = assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetch(ticket));
+        // Then
+        assertEquals(UNRECOGNIZED_PARKING_TICKET, unrecognizedParkingTicketException.getMessage());
     }
 }
