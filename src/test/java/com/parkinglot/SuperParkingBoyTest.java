@@ -3,11 +3,13 @@ package com.parkinglot;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SuperParkingBoyTest {
     private static final int BIG_PARKING_LOT_CAPACITY = 20;
+    private static final int DEFAULT_PARKING_LOT_CAPACITY = 10;
 
     @Test
     void should_return_ticket_and_park_to_first_lot_when_park_given_a_car_and_2_parking_lot_where_both_have_equal_available_position_rate(){
@@ -15,8 +17,7 @@ public class SuperParkingBoyTest {
         ParkingLot firstParkingLot = new ParkingLot();
         firstParkingLot.park(new Car());
         ParkingLot secondParkingLot = new ParkingLot(BIG_PARKING_LOT_CAPACITY);
-        secondParkingLot.park(new Car());
-        secondParkingLot.park(new Car());
+        parkCarToParkingLot(secondParkingLot, 2);
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
         SuperParkingBoy superParkingBoy = new SuperParkingBoy(parkingLots);
         Car car = new Car();
@@ -26,5 +27,27 @@ public class SuperParkingBoyTest {
         assertNotNull(ticket);
         assertTrue(firstParkingLot.getCurrentlyParkedCars().contains(car));
         assertFalse(secondParkingLot.getCurrentlyParkedCars().contains(car));
+    }
+
+    @Test
+    void should_return_ticket_and_park_to_second_lot_when_park_given_a_car_and_2_parking_lot_where_second_have_higher_available_position_rate(){
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot(BIG_PARKING_LOT_CAPACITY);
+        parkCarToParkingLot(firstParkingLot, BIG_PARKING_LOT_CAPACITY - DEFAULT_PARKING_LOT_CAPACITY);
+        ParkingLot secondParkingLot = new ParkingLot();
+        List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
+        SuperParkingBoy superParkingBoy = new SuperParkingBoy(parkingLots);
+        Car car = new Car();
+        // When
+        Ticket ticket = superParkingBoy.park(car);
+        // Then
+        assertNotNull(ticket);
+        assertFalse(firstParkingLot.getCurrentlyParkedCars().contains(car));
+        assertTrue(secondParkingLot.getCurrentlyParkedCars().contains(car));
+    }
+
+    private void parkCarToParkingLot(ParkingLot parkingLot, int numberOfCars) {
+        IntStream.range(0, numberOfCars)
+                .forEach(iteration -> parkingLot.park(new Car()));
     }
 }
