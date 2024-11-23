@@ -50,7 +50,7 @@ class ParkingLotTest {
     }
 
     @Test
-    void should_return_error_when_fetch_given_non_existing_ticket(){
+    void should_return_error_when_fetch_given_unrecognized_ticket(){
         // Given
         ParkingLot parkingLot = new ParkingLot();
         Car car = new Car();
