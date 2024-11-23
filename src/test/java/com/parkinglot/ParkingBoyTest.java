@@ -162,7 +162,7 @@ class ParkingBoyTest {
     }
 
     @Test
-    void should_return_error_when_fetch_given_non_existing_ticket_and_2_parking_lot(){
+    void should_return_error_when_fetch_given_unrecognized_ticket_and_2_parking_lot(){
         // Given
         ParkingLot firstParkingLot = new ParkingLot();
         ParkingLot secondParkingLot = new ParkingLot();
