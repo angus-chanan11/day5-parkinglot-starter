@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SmartParkingBoyTest {
     public static final int PARKING_LOT_CAPACITY = 10;
     private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
+    private static final String NO_AVAILABLE_POSITION = "No available position.";
 
     @Test
     void should_return_ticket_and_park_to_first_lot_when_park_given_a_car_and_2_parking_lot_where_both_have_equal_amount_of_car(){
@@ -97,5 +98,25 @@ public class SmartParkingBoyTest {
         UnrecognizedParkingTicketException unrecognizedParkingTicketException = assertThrows(UnrecognizedParkingTicketException.class, () -> smartParkingBoy.fetch(ticket));
         // Then
         assertEquals(UNRECOGNIZED_PARKING_TICKET, unrecognizedParkingTicketException.getMessage());
+    }
+
+    @Test
+    void should_return_error_message_when_park_given_no_position_remaining_in_all_parking_lot(){
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot();
+        for (int i = 0; i < PARKING_LOT_CAPACITY; i++) {
+            firstParkingLot.park(new Car());
+        }
+        ParkingLot secondParkingLot = new ParkingLot();
+        for (int i = 0; i < PARKING_LOT_CAPACITY; i++) {
+            secondParkingLot.park(new Car());
+        }
+        List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        Car car = new Car();
+        // When
+        NoAvailablePositionException noAvailablePositionException = assertThrows(NoAvailablePositionException.class, () -> smartParkingBoy.park(car));
+        // Then
+        assertEquals(NO_AVAILABLE_POSITION, noAvailablePositionException.getMessage());
     }
 }
