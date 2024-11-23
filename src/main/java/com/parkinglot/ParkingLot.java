@@ -7,12 +7,18 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ParkingLot {
-    private static final Integer CAPACITY = 10;
+    private static final Integer DEFAULT_CAPACITY = 10;
     private Map<Ticket, Car> parkingRecords = new HashMap<>();
     private Integer occupiedPosition;
+    private Integer capacity;
 
     public ParkingLot() {
+        this(DEFAULT_CAPACITY);
+    }
+
+    public ParkingLot(Integer capacity) {
         this.occupiedPosition = 0;
+        this.capacity = capacity;
     }
 
     public Ticket park(Car car) throws NoAvailablePositionException {
@@ -38,7 +44,7 @@ public class ParkingLot {
     }
 
     public boolean isPositionAvailable() {
-        return occupiedPosition < CAPACITY;
+        return occupiedPosition < DEFAULT_CAPACITY;
     }
 
     public List<Car> getCurrentlyParkedCars() {
@@ -49,6 +55,10 @@ public class ParkingLot {
     }
 
     public Integer getCapacity() {
-        return CAPACITY;
+        return DEFAULT_CAPACITY;
+    }
+
+    public Integer getAvailablePositionRate() {
+        return (DEFAULT_CAPACITY - occupiedPosition) / DEFAULT_CAPACITY;
     }
 }
