@@ -3,6 +3,7 @@ package com.parkinglot;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -50,9 +51,7 @@ public class SmartParkingBoyTest {
     void should_return_correct_car_when_fetch_twice_given_2_ticket_and_2_parking_lot(){
         // Given
         ParkingLot firstParkingLot = new ParkingLot();
-        for (int i = 0; i < PARKING_LOT_CAPACITY - 1; i++) {
-            firstParkingLot.park(new Car());
-        }
+        parkCarToParkingLot(firstParkingLot, PARKING_LOT_CAPACITY - 1);
         ParkingLot secondParkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
         SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
@@ -104,13 +103,9 @@ public class SmartParkingBoyTest {
     void should_return_error_message_when_park_given_no_position_remaining_in_all_parking_lot(){
         // Given
         ParkingLot firstParkingLot = new ParkingLot();
-        for (int i = 0; i < PARKING_LOT_CAPACITY; i++) {
-            firstParkingLot.park(new Car());
-        }
+        parkCarToParkingLot(firstParkingLot, PARKING_LOT_CAPACITY);
         ParkingLot secondParkingLot = new ParkingLot();
-        for (int i = 0; i < PARKING_LOT_CAPACITY; i++) {
-            secondParkingLot.park(new Car());
-        }
+        parkCarToParkingLot(secondParkingLot, PARKING_LOT_CAPACITY);
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
         SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
         Car car = new Car();
@@ -118,5 +113,10 @@ public class SmartParkingBoyTest {
         NoAvailablePositionException noAvailablePositionException = assertThrows(NoAvailablePositionException.class, () -> smartParkingBoy.park(car));
         // Then
         assertEquals(NO_AVAILABLE_POSITION, noAvailablePositionException.getMessage());
+    }
+
+    private void parkCarToParkingLot(ParkingLot parkingLot, int numberOfCars) {
+        IntStream.range(0, numberOfCars)
+                .forEach(iteration -> parkingLot.park(new Car()));
     }
 }
