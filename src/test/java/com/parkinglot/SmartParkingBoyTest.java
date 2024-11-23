@@ -7,7 +7,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SmartParkingBoyTest {
-    public static final int PARKING_LOT_CAPACITY = 10;
+    private static final int PARKING_LOT_CAPACITY = 10;
     private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
     private static final String NO_AVAILABLE_POSITION = "No available position.";
 
