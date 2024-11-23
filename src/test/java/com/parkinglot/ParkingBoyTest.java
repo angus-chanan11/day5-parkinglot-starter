@@ -10,7 +10,7 @@ class ParkingBoyTest {
 
     private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
     private static final String NO_AVAILABLE_POSITION = "No available position.";
-    public static final int PARKING_LOT_CAPACITY = 10;
+    private static final int PARKING_LOT_CAPACITY = 10;
 
     @Test
     void should_return_ticket_when_park_given_a_car_and_a_parking_lot(){
