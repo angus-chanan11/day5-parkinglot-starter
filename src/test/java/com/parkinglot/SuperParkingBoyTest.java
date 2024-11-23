@@ -46,6 +46,25 @@ public class SuperParkingBoyTest {
         assertTrue(secondParkingLot.getCurrentlyParkedCars().contains(car));
     }
 
+    @Test
+    void should_return_correct_car_when_fetch_twice_given_2_ticket_and_2_parking_lot(){
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot();
+        ParkingLot secondParkingLot = new ParkingLot();
+        List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
+        SuperParkingBoy superParkingBoy = new SuperParkingBoy(parkingLots);
+        Car firstCar = new Car();
+        Car secondCar = new Car();
+        Ticket firstTicket = superParkingBoy.park(firstCar);
+        Ticket secondTicket = superParkingBoy.park(secondCar);
+        // When
+        Car firstFetchedCar = superParkingBoy.fetch(firstTicket);
+        Car secondFetchedCar = superParkingBoy.fetch(secondTicket);
+        // Then
+        assertEquals(firstCar, firstFetchedCar);
+        assertEquals(secondCar, secondFetchedCar);
+    }
+
     private void parkCarToParkingLot(ParkingLot parkingLot, int numberOfCars) {
         IntStream.range(0, numberOfCars)
                 .forEach(iteration -> parkingLot.park(new Car()));
