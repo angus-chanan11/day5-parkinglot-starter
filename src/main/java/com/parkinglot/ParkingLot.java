@@ -47,4 +47,8 @@ public class ParkingLot {
                 .map(Map.Entry::getValue)
                 .collect(Collectors.toList());
     }
+
+    public Integer getCapacity() {
+        return CAPACITY;
+    }
 }
