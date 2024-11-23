@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SuperParkingBoyTest {
     private static final int BIG_PARKING_LOT_CAPACITY = 20;
     private static final int DEFAULT_PARKING_LOT_CAPACITY = 10;
+    private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
 
     @Test
     void should_return_ticket_and_park_to_first_lot_when_park_given_a_car_and_2_parking_lot_where_both_have_equal_available_position_rate(){
@@ -68,5 +69,21 @@ public class SuperParkingBoyTest {
     private void parkCarToParkingLot(ParkingLot parkingLot, int numberOfCars) {
         IntStream.range(0, numberOfCars)
                 .forEach(iteration -> parkingLot.park(new Car()));
+    }
+
+    @Test
+    void should_return_error_when_fetch_given_unrecognized_ticket_and_2_parking_lot(){
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot();
+        ParkingLot secondParkingLot = new ParkingLot();
+        List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
+        SuperParkingBoy superParkingBoy = new SuperParkingBoy(parkingLots);
+        Car car = new Car();
+        superParkingBoy.park(car);
+        Ticket ticket = new Ticket(firstParkingLot);
+        // When
+        UnrecognizedParkingTicketException unrecognizedParkingTicketException = assertThrows(UnrecognizedParkingTicketException.class, () -> superParkingBoy.fetch(ticket));
+        // Then
+        assertEquals(UNRECOGNIZED_PARKING_TICKET, unrecognizedParkingTicketException.getMessage());
     }
 }
