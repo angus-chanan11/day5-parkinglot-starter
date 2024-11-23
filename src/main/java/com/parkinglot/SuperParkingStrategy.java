@@ -8,7 +8,7 @@ public class SuperParkingStrategy implements ParkingStrategy {
     public ParkingLot chooseParkingLot(List<ParkingLot> parkingLots) {
         return parkingLots.stream()
                 .filter(ParkingLot::isPositionAvailable)
-                .max(Comparator.comparingInt(ParkingLot::getAvailablePositionRate))
+                .max(Comparator.comparingDouble(ParkingLot::getAvailablePositionRate))
                 .orElseThrow(NoAvailablePositionException::new);
     }
 

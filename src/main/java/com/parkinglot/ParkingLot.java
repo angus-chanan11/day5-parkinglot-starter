@@ -58,7 +58,7 @@ public class ParkingLot {
         return capacity - occupiedPosition;
     }
 
-    public Integer getAvailablePositionRate() {
-        return getRemainingPosition() / capacity;
+    public Double getAvailablePositionRate() {
+        return (double) getRemainingPosition() / capacity;
     }
 }
