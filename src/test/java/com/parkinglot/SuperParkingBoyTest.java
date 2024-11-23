@@ -11,6 +11,7 @@ public class SuperParkingBoyTest {
     private static final int BIG_PARKING_LOT_CAPACITY = 20;
     private static final int DEFAULT_PARKING_LOT_CAPACITY = 10;
     private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
+    private static final String NO_AVAILABLE_POSITION = "No available position.";
 
     @Test
     void should_return_ticket_and_park_to_first_lot_when_park_given_a_car_and_2_parking_lot_where_both_have_equal_available_position_rate(){
@@ -101,5 +102,21 @@ public class SuperParkingBoyTest {
         UnrecognizedParkingTicketException unrecognizedParkingTicketException = assertThrows(UnrecognizedParkingTicketException.class, () -> superParkingBoy.fetch(ticket));
         // Then
         assertEquals(UNRECOGNIZED_PARKING_TICKET, unrecognizedParkingTicketException.getMessage());
+    }
+
+    @Test
+    void should_return_error_message_when_park_given_no_position_remaining_in_all_parking_lot(){
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot();
+        parkCarToParkingLot(firstParkingLot, DEFAULT_PARKING_LOT_CAPACITY);
+        ParkingLot secondParkingLot = new ParkingLot();
+        parkCarToParkingLot(secondParkingLot, DEFAULT_PARKING_LOT_CAPACITY);
+        List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
+        SuperParkingBoy superParkingBoy = new SuperParkingBoy(parkingLots);
+        Car car = new Car();
+        // When
+        NoAvailablePositionException noAvailablePositionException = assertThrows(NoAvailablePositionException.class, () -> superParkingBoy.park(car));
+        // Then
+        assertEquals(NO_AVAILABLE_POSITION, noAvailablePositionException.getMessage());
     }
 }
