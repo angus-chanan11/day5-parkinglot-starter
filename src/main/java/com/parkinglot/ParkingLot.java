@@ -44,7 +44,7 @@ public class ParkingLot {
     }
 
     public boolean isPositionAvailable() {
-        return occupiedPosition < DEFAULT_CAPACITY;
+        return occupiedPosition < capacity;
     }
 
     public List<Car> getCurrentlyParkedCars() {
@@ -55,10 +55,10 @@ public class ParkingLot {
     }
 
     public Integer getCapacity() {
-        return DEFAULT_CAPACITY;
+        return capacity;
     }
 
     public Integer getAvailablePositionRate() {
-        return (DEFAULT_CAPACITY - occupiedPosition) / DEFAULT_CAPACITY;
+        return (capacity - occupiedPosition) / capacity;
     }
 }
