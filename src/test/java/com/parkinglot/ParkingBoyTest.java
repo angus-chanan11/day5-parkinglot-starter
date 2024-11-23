@@ -3,6 +3,7 @@ package com.parkinglot;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -91,12 +92,9 @@ class ParkingBoyTest {
     void should_return_error_message_when_park_given_no_position_remaining(){
         // Given
         ParkingLot parkingLot = new ParkingLot();
+        parkCarToParkingLot(parkingLot, PARKING_LOT_CAPACITY);
         List<ParkingLot> parkingLots = List.of(parkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
-        for (int i = 0; i < PARKING_LOT_CAPACITY; i++) {
-            Car car = new Car();
-            parkingBoy.park(car);
-        }
         Car car = new Car();
         // When
         NoAvailablePositionException noAvailablePositionException = assertThrows(NoAvailablePositionException.class, () -> parkingBoy.park(car));
@@ -124,9 +122,7 @@ class ParkingBoyTest {
     void should_return_ticket_and_park_to_second_lot_when_park_given_a_car_and_first_lot_full_and_second_lot_available(){
         // Given
         ParkingLot firstParkingLot = new ParkingLot();
-        for (int i = 0; i < PARKING_LOT_CAPACITY; i++) {
-            firstParkingLot.park(new Car());
-        }
+        parkCarToParkingLot(firstParkingLot, PARKING_LOT_CAPACITY);
         ParkingLot secondParkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
@@ -143,9 +139,7 @@ class ParkingBoyTest {
     void should_return_correct_car_when_fetch_twice_given_2_ticket_and_2_parking_lot(){
         // Given
         ParkingLot firstParkingLot = new ParkingLot();
-        for (int i = 0; i < PARKING_LOT_CAPACITY - 1; i++) {
-            firstParkingLot.park(new Car());
-        }
+        parkCarToParkingLot(firstParkingLot, PARKING_LOT_CAPACITY - 1);
         ParkingLot secondParkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
@@ -197,13 +191,9 @@ class ParkingBoyTest {
     void should_return_error_message_when_park_given_no_position_remaining_in_all_parking_lot(){
         // Given
         ParkingLot firstParkingLot = new ParkingLot();
-        for (int i = 0; i < PARKING_LOT_CAPACITY; i++) {
-            firstParkingLot.park(new Car());
-        }
+        parkCarToParkingLot(firstParkingLot, PARKING_LOT_CAPACITY);
         ParkingLot secondParkingLot = new ParkingLot();
-        for (int i = 0; i < PARKING_LOT_CAPACITY; i++) {
-            secondParkingLot.park(new Car());
-        }
+        parkCarToParkingLot(secondParkingLot, PARKING_LOT_CAPACITY);
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         Car car = new Car();
@@ -211,5 +201,10 @@ class ParkingBoyTest {
         NoAvailablePositionException noAvailablePositionException = assertThrows(NoAvailablePositionException.class, () -> parkingBoy.park(car));
         // Then
         assertEquals(NO_AVAILABLE_POSITION, noAvailablePositionException.getMessage());
+    }
+
+    private void parkCarToParkingLot(ParkingLot parkingLot, int numberOfCars) {
+        IntStream.range(0, numberOfCars)
+                .forEach(iteration -> parkingLot.park(new Car()));
     }
 }
