@@ -8,9 +8,7 @@ public class SmartParkingStrategy implements ParkingStrategy{
     public ParkingLot chooseParkingLot(List<ParkingLot> parkingLots) {
         return parkingLots.stream()
                 .filter(ParkingLot::isPositionAvailable)
-                .max(Comparator.comparingInt(currentParkingLot ->
-                    currentParkingLot.getCapacity() - currentParkingLot.getCurrentlyParkedCars().size()
-                ))
+                .max(Comparator.comparingInt(ParkingLot::getRemainingPosition))
                 .orElseThrow(NoAvailablePositionException::new);
     }
 }

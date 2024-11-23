@@ -54,11 +54,11 @@ public class ParkingLot {
                 .collect(Collectors.toList());
     }
 
-    public Integer getCapacity() {
-        return capacity;
+    public Integer getRemainingPosition() {
+        return capacity - occupiedPosition;
     }
 
     public Integer getAvailablePositionRate() {
-        return (capacity - occupiedPosition) / capacity;
+        return getRemainingPosition() / capacity;
     }
 }
