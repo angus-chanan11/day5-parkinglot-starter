@@ -143,6 +143,9 @@ class ParkingBoyTest {
     void should_return_correct_car_when_fetch_twice_given_2_ticket_and_2_parking_lot(){
         // Given
         ParkingLot firstParkingLot = new ParkingLot();
+        for (int i = 0; i < PARKING_LOT_CAPACITY - 1; i++) {
+            firstParkingLot.park(new Car());
+        }
         ParkingLot secondParkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
