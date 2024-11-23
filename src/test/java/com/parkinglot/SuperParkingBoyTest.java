@@ -7,7 +7,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SuperParkingBoyTest {
-    public static final int BIG_PARKING_LOT_CAPACITY = 20;
+    private static final int BIG_PARKING_LOT_CAPACITY = 20;
 
     @Test
     void should_return_ticket_and_park_to_first_lot_when_park_given_a_car_and_2_parking_lot_where_both_have_equal_available_position_rate(){
