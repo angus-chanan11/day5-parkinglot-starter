@@ -16,7 +16,8 @@ public class ParkingBoy {
     }
 
     public Ticket park(Car car) {
-        return parkingStrategy.park(car, parkingLots);
+        ParkingLot parkingLotToUse = parkingStrategy.chooseParkingLot(parkingLots);
+        return parkingLotToUse.park(car);
     }
 
     public Car fetch(Ticket ticket) {
