@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SmartParkingBoyTest {
     public static final int PARKING_LOT_CAPACITY = 10;
+    private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
 
     @Test
     void should_return_ticket_and_park_to_first_lot_when_park_given_a_car_and_2_parking_lot_where_both_have_equal_amount_of_car(){
@@ -64,5 +65,21 @@ public class SmartParkingBoyTest {
         // Then
         assertEquals(firstCar, firstFetchedCar);
         assertEquals(secondCar, secondFetchedCar);
+    }
+
+    @Test
+    void should_return_error_when_fetch_given_unrecognized_ticket_and_2_parking_lot(){
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot();
+        ParkingLot secondParkingLot = new ParkingLot();
+        List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        Car car = new Car();
+        smartParkingBoy.park(car);
+        Ticket ticket = new Ticket(firstParkingLot);
+        // When
+        UnrecognizedParkingTicketException unrecognizedParkingTicketException = assertThrows(UnrecognizedParkingTicketException.class, () -> smartParkingBoy.fetch(ticket));
+        // Then
+        assertEquals(UNRECOGNIZED_PARKING_TICKET, unrecognizedParkingTicketException.getMessage());
     }
 }
