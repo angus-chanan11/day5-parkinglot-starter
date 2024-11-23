@@ -3,18 +3,20 @@ package com.parkinglot;
 import java.util.List;
 
 public class ParkingBoy {
-    private List<ParkingLot> parkingLots;
+    protected List<ParkingLot> parkingLots;
+    protected ParkingStrategy parkingStrategy;
 
     public ParkingBoy(List<ParkingLot> parkingLots) {
+        this(parkingLots, new StandardParkingStrategy());
+    }
+
+    public ParkingBoy(List<ParkingLot> parkingLots, ParkingStrategy parkingStrategy) {
         this.parkingLots = parkingLots;
+        this.parkingStrategy = parkingStrategy;
     }
 
     public Ticket park(Car car) {
-        ParkingLot firstAvailableParkingLot = parkingLots.stream()
-                .filter(ParkingLot::isPositionAvailable)
-                .findFirst()
-                .orElseThrow(NoAvailablePositionException::new);
-        return firstAvailableParkingLot.park(car);
+        return parkingStrategy.park(car, parkingLots);
     }
 
     public Car fetch(Ticket ticket) {
