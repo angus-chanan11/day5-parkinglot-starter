@@ -21,7 +21,7 @@ public class SuperParkingBoyTest {
         ParkingLot secondParkingLot = new ParkingLot(BIG_PARKING_LOT_CAPACITY);
         parkCarToParkingLot(secondParkingLot, 2);
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
-        SuperParkingBoy superParkingBoy = new SuperParkingBoy(parkingLots);
+        ParkingBoy superParkingBoy = new ParkingBoy(parkingLots, new SuperParkingStrategy());
         Car car = new Car();
         // When
         Ticket ticket = superParkingBoy.park(car);
@@ -38,7 +38,7 @@ public class SuperParkingBoyTest {
         parkCarToParkingLot(firstParkingLot, BIG_PARKING_LOT_CAPACITY - DEFAULT_PARKING_LOT_CAPACITY);
         ParkingLot secondParkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
-        SuperParkingBoy superParkingBoy = new SuperParkingBoy(parkingLots);
+        ParkingBoy superParkingBoy = new ParkingBoy(parkingLots, new SuperParkingStrategy());
         Car car = new Car();
         // When
         Ticket ticket = superParkingBoy.park(car);
@@ -54,7 +54,7 @@ public class SuperParkingBoyTest {
         ParkingLot firstParkingLot = new ParkingLot();
         ParkingLot secondParkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
-        SuperParkingBoy superParkingBoy = new SuperParkingBoy(parkingLots);
+        ParkingBoy superParkingBoy = new ParkingBoy(parkingLots, new SuperParkingStrategy());
         Car firstCar = new Car();
         Car secondCar = new Car();
         Ticket firstTicket = superParkingBoy.park(firstCar);
@@ -78,7 +78,7 @@ public class SuperParkingBoyTest {
         ParkingLot firstParkingLot = new ParkingLot();
         ParkingLot secondParkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
-        SuperParkingBoy superParkingBoy = new SuperParkingBoy(parkingLots);
+        ParkingBoy superParkingBoy = new ParkingBoy(parkingLots, new SuperParkingStrategy());
         Car car = new Car();
         superParkingBoy.park(car);
         Ticket ticket = new Ticket(firstParkingLot);
@@ -94,7 +94,7 @@ public class SuperParkingBoyTest {
         ParkingLot firstParkingLot = new ParkingLot();
         ParkingLot secondParkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
-        SuperParkingBoy superParkingBoy = new SuperParkingBoy(parkingLots);
+        ParkingBoy superParkingBoy = new ParkingBoy(parkingLots, new SuperParkingStrategy());
         Car car = new Car();
         Ticket ticket = superParkingBoy.park(car);
         superParkingBoy.fetch(ticket);
@@ -112,7 +112,7 @@ public class SuperParkingBoyTest {
         ParkingLot secondParkingLot = new ParkingLot();
         parkCarToParkingLot(secondParkingLot, DEFAULT_PARKING_LOT_CAPACITY);
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
-        SuperParkingBoy superParkingBoy = new SuperParkingBoy(parkingLots);
+        ParkingBoy superParkingBoy = new ParkingBoy(parkingLots, new SuperParkingStrategy());
         Car car = new Car();
         // When
         NoAvailablePositionException noAvailablePositionException = assertThrows(NoAvailablePositionException.class, () -> superParkingBoy.park(car));
