@@ -20,7 +20,7 @@ public class SmartParkingBoyTest {
         ParkingLot secondParkingLot = new ParkingLot();
         secondParkingLot.park(new Car());
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        ParkingBoy smartParkingBoy = new ParkingBoy(parkingLots, new SmartParkingStrategy());
         Car car = new Car();
         // When
         Ticket ticket = smartParkingBoy.park(car);
@@ -37,7 +37,7 @@ public class SmartParkingBoyTest {
         firstParkingLot.park(new Car());
         ParkingLot secondParkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        ParkingBoy smartParkingBoy = new ParkingBoy(parkingLots, new SmartParkingStrategy());
         Car car = new Car();
         // When
         Ticket ticket = smartParkingBoy.park(car);
@@ -53,7 +53,7 @@ public class SmartParkingBoyTest {
         ParkingLot firstParkingLot = new ParkingLot();
         ParkingLot secondParkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        ParkingBoy smartParkingBoy = new ParkingBoy(parkingLots, new SmartParkingStrategy());
         Car firstCar = new Car();
         Car secondCar = new Car();
         Ticket firstTicket = smartParkingBoy.park(firstCar);
@@ -72,7 +72,7 @@ public class SmartParkingBoyTest {
         ParkingLot firstParkingLot = new ParkingLot();
         ParkingLot secondParkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        ParkingBoy smartParkingBoy = new ParkingBoy(parkingLots, new SmartParkingStrategy());
         Car car = new Car();
         smartParkingBoy.park(car);
         Ticket ticket = new Ticket(firstParkingLot);
@@ -88,7 +88,7 @@ public class SmartParkingBoyTest {
         ParkingLot firstParkingLot = new ParkingLot();
         ParkingLot secondParkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        ParkingBoy smartParkingBoy = new ParkingBoy(parkingLots, new SmartParkingStrategy());
         Car car = new Car();
         Ticket ticket = smartParkingBoy.park(car);
         smartParkingBoy.fetch(ticket);
@@ -106,7 +106,7 @@ public class SmartParkingBoyTest {
         ParkingLot secondParkingLot = new ParkingLot();
         parkCarToParkingLot(secondParkingLot, PARKING_LOT_CAPACITY);
         List<ParkingLot> parkingLots = List.of(firstParkingLot, secondParkingLot);
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        ParkingBoy smartParkingBoy = new ParkingBoy(parkingLots, new SmartParkingStrategy());
         Car car = new Car();
         // When
         NoAvailablePositionException noAvailablePositionException = assertThrows(NoAvailablePositionException.class, () -> smartParkingBoy.park(car));
